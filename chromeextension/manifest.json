@@ -4,7 +4,8 @@
   "manifest_version": 2,
   "description": "Realtime edits on the web",
   "browser_action": {
-    "default_icon": "icon.png"
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
   },
   "permissions": [
     "http://api.flickr.com/"
