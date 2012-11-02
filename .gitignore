@@ -1,16 +1,27 @@
-# Extracted from https://github.com/ulrich/macaron-factory/blob/master/.gitignore
-# Ignore all dotfiles...
-.*
-# except for .gitignore
-!.gitignore
+# Java class files
+*.class
 
-# Ignore Play! working directory #
-db
-eclipse
-log
-logs
-precompiled
-tmp
-test-result
-eclipse
-server.pid
+# Local configuration file (sdk path, etc)
+local.properties
+
+#Intelli-J IDEA modules
+.idea/
+.idea_modules/
+*.iml
+
+# generated files
+bin/
+gen/
+target/
+lib_managed/
+src_managed/
+project/boot/
+
+#play dist extra
+dist/
+
+# Logs
+logs/
+
+#Mac OSX Extras 
+*.DS_Store
