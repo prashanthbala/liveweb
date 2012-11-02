@@ -1,0 +1,30 @@
+#Node additions
+node_modules/
+
+# Java class files
+*.class
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+#Intelli-J IDEA modules
+.idea/
+.idea_modules/
+*.iml
+
+# generated files
+bin/
+gen/
+target/
+lib_managed/
+src_managed/
+project/boot/
+
+#play dist extra
+dist/
+
+# Logs
+logs/
+
+#Mac OSX Extras 
+*.DS_Store
