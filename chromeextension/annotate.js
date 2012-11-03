@@ -79,13 +79,20 @@ $(document).ready(function(){
       $(document).on('mouseover', handleMouseover); 
       $(document).on('mouseout', handleMouseout);
       $(document).on('click', handleMouseClick);
-
-      $('#annotate-overlay-layer').addClass('overlay-layer');
+      
+      if (isMainDude)
+      {
+        $('#annotate-overlay-layer').addClass('overlay-layer');
+        }
     } 
     else{
       $(document).off('mouseover'); 
       $(document).off('click');
-      $('#annotate-overlay-layer').removeClass('overlay-layer');
+
+      if (isMainDude)
+      {
+        $('#annotate-overlay-layer').removeClass('overlay-layer');
+        }
     }
   });
 });
