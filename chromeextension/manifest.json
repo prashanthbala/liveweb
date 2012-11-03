@@ -8,7 +8,7 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["eventPage.js"],
+    "page":"background.html",
     "persistent": false
   },
   "content_scripts": [
@@ -19,6 +19,7 @@
     }
   ],
   "permissions": [
-    "http://api.flickr.com/"
+    "tabs",
+    "http://*.facebook.com/*"
   ]
 }

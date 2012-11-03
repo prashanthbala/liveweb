@@ -20,7 +20,6 @@
 // 	}
 // );
 
-
 function onFacebookLogin() {
                 if (!localStorage.accessToken) {
                     chrome.tabs.getAllInWindow(null, function(tabs) {
