@@ -2,17 +2,20 @@ if ("WebSocket" in window)
 {
   var channel = 1
   var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
+  var isMainDude = true
 
   socket.onopen = function(){  
     alert("Socket has been opened!");  
   } 
 
   socket.onmessage = function(htmlfileEvt){  
-    //change current page to it 
-    newPageSource = htmlfileEvt.data;
-    var newDoc = document.open("text/html", "replace");
-    newDoc.write(newPageSource);
-    newDoc.close();
+    if(!isMainDude) {
+        //change current page to it 
+        newPageSource = htmlfileEvt.data;
+        var newDoc = document.open("text/html", "replace");
+        newDoc.write(newPageSource);
+        newDoc.close();
+    }
   }
 
   socket.onclose = function(){  
@@ -39,14 +42,15 @@ var handleMouseover = function (e) {
       startID++;
     }
     lastID = $(targetElement).attr("id");
-    console.log('last ID: ', lastID);
-
-    var pageSource = document.documentElement.outerHTML;
-    socket.send(pageSource);    
+    console.log('last ID: ', lastID);  
   }
 var handleMouseout = function (e) {
   $(e.target).removeClass('highlight');
-  }
+}
+var handleMouseClick = function (e) {
+    var pageSource = document.documentElement.outerHTML;
+    socket.send(pageSource);  
+}
 $(document).ready(function(){
   //$('body').append('<div id="container"></div>');
   $('body').append('<div id="annotate_tpl" class="annotate"><textarea class="postit"></textarea><a class="annotate-close"><strong style="color:#ff0000;">x</strong> delete</a></div>');
@@ -72,10 +76,13 @@ $(document).ready(function(){
       $(document).off('mouseover');
       $(document).on('mouseover', handleMouseover); 
       $(document).on('mouseout', handleMouseout);
+      $(document).on('click', handleMouseClick);
+
       $('#annotate-overlay-layer').addClass('overlay-layer');
     } 
     else{
       $(document).off('mouseover'); 
+      $(document).off('click');
       $('#annotate-overlay-layer').removeClass('overlay-layer');
     }
   });
