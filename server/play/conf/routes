@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                                       controllers.Application.index
-GET     /channel/$id<([0-9]|[a-z]){1,40}+>      controllers.Application.websockets(id: String)
+GET     /channel/$id<.+>                        controllers.Application.websockets(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                           controllers.Assets.at(path="/public", file)

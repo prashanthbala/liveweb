@@ -20,13 +20,21 @@ if ("WebSocket" in window)
         tag = response.tag;
         console.log("in here. eventType: ",eventType,", tag: ,",tag);
         /* TAGS CHANGE */
-        if (oldRecvdTag)
+        if (oldRecvdTag && oldEventType && oldEventType != "click") // && oldEventType != "dot" && oldEventType != "draw")
         {
           $(oldRecvdTag).removeClass(oldEventType); //'highlight');
         }
         if(eventType == "highlight") {
           $(tag).addClass('highlight');  
           console.log('highlight. tag: ',tag,'\n');
+        }
+        else if (eventType == "click") {
+          // chrome.tabs.getCurrent(function (tab) {
+          //   var tabUrl = encodeURIComponent(tab.url);
+          //   var tabTitle = encodeURIComponent(tab.title);
+          //   chrome.tabs.update(tab.id, {url: tag});
+            $(tag).click();
+          });
         }
         else if(eventType == "dot") {
           console.log('dotlol');
@@ -98,10 +106,13 @@ var handleMouseout = function (e) {
   }
 }
 var handleMouseClick = function (e) {
-    console.log("FORTHELUZ");
     //var pageSource = document.documentElement.outerHTML;
-    //socket.send(pageSource);  
+    //socket.send(pageSource); 
+    var tag = $(e.target).getPath(); /* GET PATH SHIT */
+
+    socket.send(JSON.stringify({tag: tag, type: "click"}));
 }
+
 $(document).ready(function(){
   //$('body').append('<div id="container"></div>');
   $('body').append('<div id="annotate_tpl" class="annotate"><textarea class="postit"></textarea><a class="annotate-close"><strong style="color:#ff0000;">x</strong> delete</a></div>');
