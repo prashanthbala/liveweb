@@ -2,6 +2,7 @@ var isMainDude = false;
 var oldRecvdTag = null;
 var oldEventType = null;
 var lastLink = null;
+var currentMsg = "";
 
 if ("WebSocket" in window)
 {
@@ -53,10 +54,7 @@ if ("WebSocket" in window)
           //$(tag).addClass('draw');  
         }
         else if(eventType == "keypress") {
-          console.log("KEYPRESSLOL\n keycode", response.keycode);
-          var e = jQuery.Event("keypress");
-          e.keyCode = response.keycode;
-          $(tag).trigger(e);
+          $('#chat-box').text(tag);
           }
         oldRecvdTag  = tag;
         oldEventType = eventType; 
@@ -155,8 +153,17 @@ var handleLinkClick = function (e) {
 
 var handleKeypress = function (e) {
   console.log("keypress");
-  var tag = $(e.target).getPath();
-  socket.send(JSON.stringify({tag: tag, type: "keypress", keycode: e.keyCode}));
+  if (e.keyCode == 46)
+  {
+    socket.send(JSON.stringify({tag: currentMsg, type: "keypress"}));
+    currentMsg = "";
+  }
+  else
+  {
+    currentMsg = currentMsg + String.fromCharCode(e.keyCode);
+  }
+  //var tag = $(e.target).getPath();
+  //socket.send(JSON.stringify({tag: tag, type: "keypress", keycode: e.keyCode}));
   }
 
   //  chrome.tabs.getCurrent(function (currentTab) {
@@ -174,7 +181,19 @@ var handleKeypress = function (e) {
 
 
 $(document).ready(function(){
+    var apiKey = '21361811';
+    var sessionId = '1_MX4yMTM2MTgxMX5-U2F0IE5vdiAwMyAxMTowNzo1MiBQRFQgMjAxMn4wLjg2MzI5MTE0fg';
+    var token = 'T1==cGFydG5lcl9pZD0yMTM2MTgxMSZzaWc9NjMxOTdiMTdmMGJiNzJlODAzMDJmYmI5NjAxNjQ1Yzk1MWRiNDE0MTpzZXNzaW9uX2lkPTFfTVg0eU1UTTJNVGd4TVg1LVUyRjBJRTV2ZGlBd015QXhNVG93TnpvMU1pQlFSRlFnTWpBeE1uNHdMamcyTXpJNU1URTBmZyZjcmVhdGVfdGltZT0xMzUxOTY2MDcyJmV4cGlyZV90aW1lPTEzNTIwNTI0NzImcm9sZT1wdWJsaXNoZXImbm9uY2U9ODk2Mzgw';           
 
+    TB.setLogLevel(TB.DEBUG); // Set this for helpful debugging messages in console
+
+     var session = TB.initSession(sessionId);     
+     session.addEventListener('sessionConnected', sessionConnectedHandler);     
+     session.connect(apiKey, token);
+
+     function sessionConnectedHandler(event) {
+       alert('Hello world. I am connected to OpenTok :).');
+     }
   //$('body').append('<div id="container"></div>');
   $('body').append('<div id="annotate_tpl" class="annotate"><textarea class="postit"></textarea><a class="annotate-close"><strong style="color:#ff0000;">x</strong> delete</a></div>');
 
@@ -190,6 +209,7 @@ $(document).ready(function(){
   /* Add overlay elements, and annotation bar */
   $('body').append('<div id="annotate-overlay-layer"></div>');
   $('body').append('<div id="annotation-bar" class="fixed-bottom"><input type="checkbox" id="annotate-checkbox"></div>');
+  $('body').append('<div id="chat-box" class="chatbox"></div>');
 
   /* Track elements on mouseover when checked, remove listeners when unchecked*/
   /* Also handle overlay layer */
