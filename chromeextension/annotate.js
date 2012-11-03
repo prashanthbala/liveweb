@@ -147,13 +147,6 @@ var handleLinkClick = function (e) {
   socket.send(JSON.stringify({tag: tag, type: "redirect"}));
   }
 
-  //  chrome.tabs.getCurrent(function (currentTab) {
-  //   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  //       if(tabId == currentTab.id) {
-  //         socket.send(JSON.stringify({tag: changeInfo.url, type: "redirect"}));
-  //       }
-  //   });
-  // });
 
 // var handleLinkClick = function (e) {
 //   var tag = $(e.target).href;

@@ -9,6 +9,21 @@
               //chrome.tabs.executeScript(null,{file: "websocket.js", runAt: "document_start"});
             }
         }); 
+
+        // chrome.extension.onRequest.addListener(
+        //   function(request, sender, sendResponse) {
+        //       if (request.type == "redirect")
+
+        //         sendResponse({farewell: "goodbye"});
+        // });
+
+        //                  chrome.tabs.getCurrent(function (currentTab) {
+        //           chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+        //               if(tabId == currentTab.id) {
+        //                 socket.send(JSON.stringify({tag: changeInfo.url, type: "redirect"}));
+        //               }
+        //           });
+        //         });
 //  }
 // );
 
