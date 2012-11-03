@@ -14,14 +14,16 @@ if ("WebSocket" in window)
         eventType = htmlfileEvt.data.eventType;
         tag = htmlfileEvt.data.tag;
         /* TAGS CHANGE */
-        if(tag == "highlight") {
-
+        if(eventType == "highlight") {
+          $(tag).addClass('highlight');  
         }
-        else if(tag == "dot") {
-           
+        else if(eventType == "dot") {
+          console.log('dotlol');
+          //$(tag).addClass('dot');  
         }
-        else if(tag == "draw") {
-
+        else if(eventType == "draw") {
+          console.log('drawlol');
+          //$(tag).addClass('draw');  
         }
     }
   }
@@ -56,17 +58,17 @@ var handleMouseover = function (e) {
 
         
         //var pageSource = document.documentElement.outerHTML;
-        var tag = /* GET PATH SHIT */
+        var tag = $(targetElement).getPath(); /* GET PATH SHIT */
 
         socket.send({"tag" : tag, "type" : "highlight"});  
     }
     else if (currentTypeOfInteraction = "dot") {
-        var tag = /* GET PATH SHIT */
+        var tag = $(targetElement).getPath(); /* GET PATH SHIT */
 
         socket.send({"tag" : tag, "type" : "dot"});  
     }
     else if (currentTypeOfInteraction = "draw") {
-        var tag = /* GET PATH SHIT */
+        var tag = $(targetElement).getPath(); /* GET PATH SHIT */
 
         socket.send({"tag" : tag, "type" : "dot"});  
     }
