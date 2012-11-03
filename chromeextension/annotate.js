@@ -47,7 +47,6 @@ var currentTypeOfInteraction = "highlight"
 var handleMouseover = function (e) {
     var targetElement = e.target;
     if (currentTypeOfInteraction = "highlight") {
-        $(targetElement).addClass('highlight');
         //console.log('target: ', targetElement);
         var currentID = $(targetElement).attr("id");
         //console.log('id: ', currentID);
@@ -63,6 +62,7 @@ var handleMouseover = function (e) {
         //var pageSource = document.documentElement.outerHTML;
         var tag = $(targetElement).getPath(); /* GET PATH SHIT */
         socket.send(JSON.stringify({tag: tag, type: "highlight"}));
+        $(targetElement).addClass('highlight');
     }
     else if (currentTypeOfInteraction = "dot") {
         var tag = $(targetElement).getPath(); /* GET PATH SHIT */
