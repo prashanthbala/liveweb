@@ -34,7 +34,6 @@ if ("WebSocket" in window)
           //   var tabTitle = encodeURIComponent(tab.title);
           //   chrome.tabs.update(tab.id, {url: tag});
             $(tag).click();
-          });
         }
         else if(eventType == "dot") {
           console.log('dotlol');
