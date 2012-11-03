@@ -76,6 +76,7 @@ var handleMouseover = function (e) {
     if ($(targetElement).attr('href'))
     {
       lastLink = $(targetElement).attr('href');
+      console.log("set lastlink to", lastLink);
     }
     if (currentTypeOfInteraction = "highlight") {
         //console.log('target: ', targetElement);
@@ -107,10 +108,10 @@ var handleMouseover = function (e) {
     }
   }
 var handleMouseout = function (e) {
-  if (lastLink)
+  /*if (lastLink)
   {
     lastLink = null;
-  }
+  }*/
 
   if (currentTypeOfInteraction = "highlight") {
     $(e.target).removeClass('highlight');
@@ -127,7 +128,7 @@ var handleMouseClick = function (e) {
     //socket.send(pageSource); 
     if (lastLink)
     {
-      socket.send(JSON.stringify({tag: lastlink, type: "redirect"}));
+      socket.send(JSON.stringify({tag: lastLink, type: "redirect"}));
       lastLink = null;
     }
     else
