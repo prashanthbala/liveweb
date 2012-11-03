@@ -1,6 +1,35 @@
 var isMainDude = false;
-var lastID = null; //Last visited element id
-var startID = 0; //Start id suffix to give ids to elements without ids
+if ("WebSocket" in window)
+{
+  var channel = 1;
+  //var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
+  var socket = new WebSocket("ws://128.237.202.85:9000/channel/"+channel);
+  socket.onopen = function(){  
+    console.log('socket open\n');
+  } 
+
+  socket.onmessage = function(htmlfileEvt){  
+    if(!isMainDude) {
+        //change current page to it 
+        newPageSource = htmlfileEvt.data;
+        var newDoc = document.open("text/html", "replace");
+        newDoc.write(newPageSource);
+        newDoc.close();
+    }
+  }
+
+  socket.onclose = function(){  
+    alert("connection closed");
+  }
+}
+else {
+  alert("WebSocket NOT supported by your Browser!");
+}
+
+
+var lastID = null;
+var startID = 0;
+
 var handleMouseover = function (e) {
     var targetElement = e.target;
     $(targetElement).addClass('highlight');
@@ -26,7 +55,7 @@ var handleMouseClick = function (e) {
     //var pageSource = document.documentElement.outerHTML;
     //socket.send(pageSource);  
 }
-var docReadyHandler = function() { 
+$(document).ready(function(){
   //$('body').append('<div id="container"></div>');
   $('body').append('<div id="annotate_tpl" class="annotate"><textarea class="postit"></textarea><a class="annotate-close"><strong style="color:#ff0000;">x</strong> delete</a></div>');
 
@@ -54,7 +83,7 @@ var docReadyHandler = function() {
       $(document).on('click', handleMouseClick);
       
       isMainDude = true;
-      console.log("bla");
+
       $('#annotate-overlay-layer').addClass('overlay-layer');
     } 
     else{
@@ -65,36 +94,4 @@ var docReadyHandler = function() {
       $('#annotate-overlay-layer').removeClass('overlay-layer');
     }
   });
-} 
-if ("WebSocket" in window)
-{
-  var channel = 1;
-  //var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
-  var socket = new WebSocket("ws://128.237.202.85:9000/channel/"+channel);
-  socket.onopen = function(){  
-    console.log('socket open\n');
-  } 
-
-  socket.onmessage = function(htmlfileEvt){  
-    if(!isMainDude) {
-        //change current page to it 
-        newPageSource = htmlfileEvt.data;
-        var newDoc = document.open("text/html", "replace");
-        newDoc.write(newPageSource);
-        newDoc.close();
-        $(document).ready(docReadyHandler);
-        alert("lol");
-
-    }
-  }
-
-  socket.onclose = function(){  
-    alert("connection closed");
-  }
-}
-else {
-  alert("WebSocket NOT supported by your Browser!");
-}
-
-
-$(document).ready(docReadyHandler);
+});
