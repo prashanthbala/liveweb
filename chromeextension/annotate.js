@@ -11,10 +11,18 @@ if ("WebSocket" in window)
   socket.onmessage = function(htmlfileEvt){  
     if(!isMainDude) {
         //change current page to it 
-        newPageSource = htmlfileEvt.data;
-        var newDoc = document.open("text/html", "replace");
-        newDoc.write(newPageSource);
-        newDoc.close();
+        eventType = htmlfileEvt.data.eventType;
+        tag = htmlfileEvt.data.tag;
+        /* TAGS CHANGE */
+        if(tag == "highlight") {
+
+        }
+        else if(tag == "dot") {
+           
+        }
+        else if(tag == "draw") {
+
+        }
     }
   }
 
@@ -29,23 +37,39 @@ else {
 
 var lastID = null;
 var startID = 0;
+var currentTypeOfInteraction = "highlight"
 
 var handleMouseover = function (e) {
     var targetElement = e.target;
-    $(targetElement).addClass('highlight');
-    //console.log('target: ', targetElement);
-    var currentID = $(targetElement).attr("id");
-    //console.log('id: ', currentID);
-    if (!currentID)
-    {
-      $(targetElement).attr("id", "annotations_"+startID);
-      startID++;
-    }
-    lastID = $(targetElement).attr("id");
-    console.log('last ID: ', lastID);  
+    if (currentTypeOfInteraction = "highlight") {
+        $(targetElement).addClass('highlight');
+        //console.log('target: ', targetElement);
+        var currentID = $(targetElement).attr("id");
+        //console.log('id: ', currentID);
+        if (!currentID)
+        {
+          $(targetElement).attr("id", "annotations_"+startID);
+          startID++;
+        }
+        lastID = $(targetElement).attr("id");
+        console.log('last ID: ', lastID);  
 
-    var pageSource = document.documentElement.outerHTML;
-    socket.send(pageSource);  
+        
+        //var pageSource = document.documentElement.outerHTML;
+        var tag = /* GET PATH SHIT */
+
+        socket.send({"tag" : tag, "type" : "highlight"});  
+    }
+    else if (currentTypeOfInteraction = "dot") {
+        var tag = /* GET PATH SHIT */
+
+        socket.send({"tag" : tag, "type" : "dot"});  
+    }
+    else if (currentTypeOfInteraction = "draw") {
+        var tag = /* GET PATH SHIT */
+
+        socket.send({"tag" : tag, "type" : "dot"});  
+    }
   }
 var handleMouseout = function (e) {
   $(e.target).removeClass('highlight');
