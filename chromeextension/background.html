@@ -1,10 +1,10 @@
-chrome.extension.onMessage.addListener(
-  	function(request, sender, sendResponse) {
-	    console.log(sender.tab ?
-	                "from a content script:" + sender.tab.url :
-	                "from the extension");
-	    if (request.greeting == "hello")
-	      sendResponse({farewell: "goodbye"});
+// chrome.extension.onMessage.addListener(
+//   	function(request, sender, sendResponse) {
+// 	    console.log(sender.tab ?
+// 	                "from a content script:" + sender.tab.url :
+// 	                "from the extension");
+// 	    if (request.greeting == "hello")
+// 	      sendResponse({farewell: "goodbye"});
 
 	  	chrome.extension.onConnect.addListener(function(port) {
 			  console.assert(port.name == "knockknock");
@@ -17,6 +17,6 @@ chrome.extension.onMessage.addListener(
 				      port.postMessage({question: "I don't get it."});
 			  });
 		});
-	}
-);
+// 	}
+// );
 
