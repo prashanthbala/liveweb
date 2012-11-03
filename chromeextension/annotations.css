@@ -1,7 +1,7 @@
 .chatbox
 {
   position: fixed;
-  background-color: rgba(255,255,255,0.7); 
+  background-color: rgba(255,242,0,0.7); 
   opacity: .7;
   top: 30px;
   right: 30px;
@@ -9,6 +9,8 @@
   height: 200px;
   z-index: 16777271;
   color: #000000;
+  font-size: 30px;
+  overflow: auto;
 }
 .overlay-layer
 { 
