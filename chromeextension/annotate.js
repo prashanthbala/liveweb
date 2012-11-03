@@ -12,7 +12,7 @@ if ("WebSocket" in window)
     if(!isMainDude) {
         //change current page to it 
         var response = JSON.parse(htmlfileEvt.data);
-        eventType = response.eventType;
+        eventType = response.type;
         tag = response.tag;
         console.log("in here. eventType: ",eventType,", tag: ,",tag);
         /* TAGS CHANGE */
@@ -53,7 +53,7 @@ var handleMouseover = function (e) {
         //console.log('id: ', currentID);
         if (!currentID)
         {
-          $(targetElement).attr("id", "annotations_"+startID);
+          //$(targetElement).attr("id", "annotations_"+startID);
           startID++;
         }
         lastID = $(targetElement).attr("id");
