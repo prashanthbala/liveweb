@@ -1,16 +1,14 @@
+var isMainDude = false;
 if ("WebSocket" in window)
 {
   var channel = 1;
   var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
-  var isMainDude = true;
-
   socket.onopen = function(){  
     console.log('socket open\n');
   } 
 
   socket.onmessage = function(htmlfileEvt){  
     if(!isMainDude) {
-        console.log("NOT MAIN DUDE ONMESSAGE\n");
         //change current page to it 
         newPageSource = htmlfileEvt.data;
         var newDoc = document.open("text/html", "replace");
@@ -80,19 +78,17 @@ $(document).ready(function(){
       $(document).on('mouseout', handleMouseout);
       $(document).on('click', handleMouseClick);
       
-      if (isMainDude)
-      {
-        $('#annotate-overlay-layer').addClass('overlay-layer');
-        }
+      isMainDude = true;
+
+      $('#annotate-overlay-layer').addClass('overlay-layer');
     } 
     else{
       $(document).off('mouseover'); 
       $(document).off('click');
 
-      if (isMainDude)
-      {
-        $('#annotate-overlay-layer').removeClass('overlay-layer');
-        }
+      isMainDude = false;
+
+      $('#annotate-overlay-layer').removeClass('overlay-layer');
     }
   });
 });
