@@ -11,11 +11,14 @@ if ("WebSocket" in window)
   socket.onmessage = function(htmlfileEvt){  
     if(!isMainDude) {
         //change current page to it 
-        eventType = htmlfileEvt.data.eventType;
-        tag = htmlfileEvt.data.tag;
+        var response = JSON.parse(htmlfileEvt.data);
+        eventType = response.eventType;
+        tag = response.tag;
+        console.log("in here. eventType: ",eventType,", tag: ,",tag);
         /* TAGS CHANGE */
         if(eventType == "highlight") {
           $(tag).addClass('highlight');  
+          console.log('highlight. tag: ',tag,'\n');
         }
         else if(eventType == "dot") {
           console.log('dotlol');
@@ -59,18 +62,17 @@ var handleMouseover = function (e) {
         
         //var pageSource = document.documentElement.outerHTML;
         var tag = $(targetElement).getPath(); /* GET PATH SHIT */
-
-        socket.send({"tag" : tag, "type" : "highlight"});  
+        socket.send(JSON.stringify({tag: tag, type: "highlight"}));
     }
     else if (currentTypeOfInteraction = "dot") {
         var tag = $(targetElement).getPath(); /* GET PATH SHIT */
 
-        socket.send({"tag" : tag, "type" : "dot"});  
+        socket.send(JSON.stringify({tag: tag, type: "dot"}));
     }
     else if (currentTypeOfInteraction = "draw") {
         var tag = $(targetElement).getPath(); /* GET PATH SHIT */
 
-        socket.send({"tag" : tag, "type" : "dot"});  
+        socket.send(JSON.stringify({tag: tag, type: "draw"}));
     }
   }
 var handleMouseout = function (e) {
