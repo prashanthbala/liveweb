@@ -1,6 +1,7 @@
 var isMainDude = false;
 var oldRecvdTag = null;
 var oldEventType = null;
+var lastLink = null;
 
 if ("WebSocket" in window)
 {
@@ -36,10 +37,11 @@ if ("WebSocket" in window)
            $(tag2).click();
         }
         else if (eventType == "redirect") {
-            chrome.tabs.getCurrent(function (tab) {
+            document.location.href = tag;
+            //chrome.tabs.getCurrent(function (tab) {
                 // var tabUrl = encodeURIComponent(tab.url);
                 // var tabTitle = encodeURIComponent(tab.title);
-                chrome.tabs.update(tab.id, {url: tag});
+            //    chrome.tabs.update(tab.id, {url: tag});
           });
         }
         else if(eventType == "dot") {
@@ -71,6 +73,10 @@ var currentTypeOfInteraction = "highlight"
 
 var handleMouseover = function (e) {
     var targetElement = e.target;
+    if ($(targetElement).attr('href'))
+    {
+      lastLink = $(targetElement).attr('href');
+    }
     if (currentTypeOfInteraction = "highlight") {
         //console.log('target: ', targetElement);
         var currentID = $(targetElement).attr("id");
@@ -101,6 +107,11 @@ var handleMouseover = function (e) {
     }
   }
 var handleMouseout = function (e) {
+  if (lastLink)
+  {
+    lastLink = null;
+  }
+
   if (currentTypeOfInteraction = "highlight") {
     $(e.target).removeClass('highlight');
   }
@@ -114,13 +125,23 @@ var handleMouseout = function (e) {
 var handleMouseClick = function (e) {
     //var pageSource = document.documentElement.outerHTML;
     //socket.send(pageSource); 
-    var tag = $(e.target).getPath(); /* GET PATH SHIT */
+    if (lastLink)
+    {
+      socket.send(JSON.stringify({tag: lastlink, type: "redirect"}));
+      lastLink = null;
+    }
+    else
+    {
+      var tag = $(e.target).getPath(); /* GET PATH SHIT */
+      socket.send(JSON.stringify({tag: tag, type: "click"}));
+    }
 
-    socket.send(JSON.stringify({tag: tag, type: "click"}));
 }
 
 var handleLinkClick = function (e) {
+  console.log("link click");
   var tag = $(e.target).href;
+  console.log("link: ",tag);
   socket.send(JSON.stringify({tag: tag, type: "redirect"}));
   }
 
