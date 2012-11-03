@@ -2,7 +2,8 @@ var isMainDude = false;
 if ("WebSocket" in window)
 {
   var channel = 1;
-  var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
+  //var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
+  var socket = new WebSocket("ws://128.237.202.85:9000/channel/"+channel);
   socket.onopen = function(){  
     console.log('socket open\n');
   } 
@@ -87,7 +88,6 @@ $(document).ready(function(){
       $(document).off('click');
 
       isMainDude = false;
-
       $('#annotate-overlay-layer').removeClass('overlay-layer');
     }
   });
