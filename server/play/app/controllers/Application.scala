@@ -19,8 +19,13 @@ object Application extends Controller {
     connections.getOrElseUpdate(id, {val set = new HashSet[PushEnumerator[String]].empty; set.add(out); set}).add(out)
 
     val in = Iteratee.foreach[String](content => {
-      Logger debug content
-      connections.getOrElse(id, throw new Exception("It has to be created before")).map {_.push(content)}
+
+      val key = """<div id="annotate-overlay-layer" class="overlay-layer">"""
+      val replacement = """<div id="annotate-overlay-layer">"""
+      val regex = new scala.util.matching.Regex(key)
+      val replacedContent = regex.replaceAllIn(content, replacement)
+
+      connections.getOrElse(id, throw new Exception("It has to be created before")).map {_.push(replacedContent)}
     }).mapDone(_ => {
       //disconnected
       connections getOrElse(id, throw new Exception("It had to be there before")) remove out
