@@ -37,7 +37,7 @@ if ("WebSocket" in window)
            $(tag2).click();
         }
         else if (eventType == "redirect") {
-            document.location.href = tag;
+            window.location.href = tag;
             //chrome.tabs.getCurrent(function (tab) {
                 // var tabUrl = encodeURIComponent(tab.url);
                 // var tabTitle = encodeURIComponent(tab.title);
