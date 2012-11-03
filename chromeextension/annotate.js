@@ -1,5 +1,6 @@
 var isMainDude = false;
 var oldRecvdTag = null;
+var oldEventType = null;
 
 if ("WebSocket" in window)
 {
@@ -18,12 +19,11 @@ if ("WebSocket" in window)
         tag = response.tag;
         console.log("in here. eventType: ",eventType,", tag: ,",tag);
         /* TAGS CHANGE */
+        if (oldRecvdTag)
+        {
+          $(oldRecvdTag).removeClass(oldEventType); //'highlight');
+        }
         if(eventType == "highlight") {
-          if (oldRecvdTag)
-          {
-            $(oldRecvdTag).removeClass('highlight');
-            oldRecvdTag = tag;
-          }
           $(tag).addClass('highlight');  
           console.log('highlight. tag: ',tag,'\n');
         }
@@ -35,6 +35,8 @@ if ("WebSocket" in window)
           console.log('drawlol');
           //$(tag).addClass('draw');  
         }
+        oldRecvdTag  = tag;
+        oldEventType = eventType; 
     }
   }
 
