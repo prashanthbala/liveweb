@@ -1,3 +1,29 @@
+if ("WebSocket" in window)
+{
+  var channel = 1
+  var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
+
+  socket.onopen = function(){  
+    alert("Socket has been opened!");  
+  } 
+
+  socket.onmessage = function(htmlfileEvt){  
+    //change current page to it 
+    newPageSource = htmlfileEvt.data;
+    var newDoc = document.open("text/html", "replace");
+    newDoc.write(newPageSource);
+    newDoc.close();
+  }
+
+  socket.onclose = function(){  
+    alert("connection closed");
+  }
+}
+else {
+  alert("WebSocket NOT supported by your Browser!");
+}
+
+
 var lastID = null;
 var startID = 0;
 
@@ -16,12 +42,7 @@ var handleMouseover = function (e) {
     console.log('last ID: ', lastID);
 
     var pageSource = document.documentElement.outerHTML;
-    
-    var newPageSource = "";
-
-    //var newDoc = document.open("text/html", "replace");
-    //newDoc.write(newPageSource);
-    //newDoc.close();
+    socket.send(pageSource);    
   }
 var handleMouseout = function (e) {
   $(e.target).removeClass('highlight');
