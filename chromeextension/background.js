@@ -6,7 +6,7 @@
               chrome.tabs.executeScript(null,{file: "getpath.js", runAt: "document_start"});
               chrome.tabs.executeScript(null,{file: "jquery-annotate/jquery-annotate.min.js", runAt: "document_start"});
               chrome.tabs.executeScript(null,{file: "annotate.js", runAt: "document_start"});
-              chrome.tabs.executeScript(null,{file: "websocket.js", runAt: "document_start"});
+              //chrome.tabs.executeScript(null,{file: "websocket.js", runAt: "document_start"});
             }
         }); 
 //  }
