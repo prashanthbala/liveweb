@@ -121,7 +121,7 @@ var handleMouseClick = function (e) {
 
 var handleLinkClick = function (e) {
   var tag = $(e.target).href;
-  socket.send(JSON.stringify({tag: tag, type: "linkclick"}));
+  socket.send(JSON.stringify({tag: tag, type: "redirect"}));
   }
 
 $(document).ready(function(){
