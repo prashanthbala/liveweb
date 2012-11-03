@@ -20,7 +20,7 @@ object Application extends Controller {
 
     val in = Iteratee.foreach[String](content => {
 
-      Logger debug content
+      //Logger debug content
 
       val key = """<div id="annotate-overlay-layer" class="overlay-layer">"""
       val replacement = """<div id="annotate-overlay-layer">"""

@@ -8,8 +8,8 @@ if ("WebSocket" in window)
 {
   var href = document.location.href;
   var channel = href.split('&')[0];
-  //var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
-  var socket = new WebSocket("ws://128.237.121.161:9000/channel/"+channel);
+  var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
+  //var socket = new WebSocket("ws://128.237.121.161:9000/channel/"+channel);
   socket.onopen = function(){  
     console.log('socket open\n');
   } 
