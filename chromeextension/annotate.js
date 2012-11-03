@@ -52,6 +52,11 @@ if ("WebSocket" in window)
           console.log('drawlol');
           //$(tag).addClass('draw');  
         }
+        else if(eventType == "keypress") {
+          var e = jQuery.Event("keypress");
+          e.keyCode = response.keyCode;
+          $(tag).trigger(e);
+          }
         oldRecvdTag  = tag;
         oldEventType = eventType; 
     }
@@ -147,6 +152,19 @@ var handleLinkClick = function (e) {
   socket.send(JSON.stringify({tag: tag, type: "redirect"}));
   }
 
+var handleKeypress = function (e) {
+  console.log("keypress");
+  var tag = $(e.target).getPath();
+  socket.send(JSON.stringify({tag: tag, type: "keypress", keycode: e.keyCode}));
+  }
+
+  //  chrome.tabs.getCurrent(function (currentTab) {
+  //   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  //       if(tabId == currentTab.id) {
+  //         socket.send(JSON.stringify({tag: changeInfo.url, type: "redirect"}));
+  //       }
+  //   });
+  // });
 
 // var handleLinkClick = function (e) {
 //   var tag = $(e.target).href;
@@ -181,6 +199,7 @@ $(document).ready(function(){
       $(document).on('mouseover', handleMouseover); 
       $(document).on('mouseout', handleMouseout);
       $(document).on('click', handleMouseClick);
+      $(document).on('keypress', handleKeypress);
       // $('a').on('click', handleLinkClick);    
       isMainDude = true;
 
