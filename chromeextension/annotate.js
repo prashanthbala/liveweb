@@ -42,7 +42,7 @@ if ("WebSocket" in window)
                 // var tabUrl = encodeURIComponent(tab.url);
                 // var tabTitle = encodeURIComponent(tab.title);
             //    chrome.tabs.update(tab.id, {url: tag});
-          });
+          
         }
         else if(eventType == "dot") {
           console.log('dotlol');
@@ -68,7 +68,7 @@ else {
 
 var lastID = null;
 var startID = 0;
-var currentTypeOfInteraction = "highlight"
+var currentTypeOfInteraction = "highlight";
 
 
 var handleMouseover = function (e) {
