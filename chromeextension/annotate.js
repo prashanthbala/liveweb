@@ -138,6 +138,7 @@ var handleMouseClick = function (e) {
 
 }
 
+
 var handleLinkClick = function (e) {
   console.log("link click");
   var tag = $(e.target).href;
@@ -145,7 +146,22 @@ var handleLinkClick = function (e) {
   socket.send(JSON.stringify({tag: tag, type: "redirect"}));
   }
 
+   chrome.tabs.getCurrent(function (currentTab) {
+    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+        if(tabId == currentTab.id) {
+          socket.send(JSON.stringify({tag: changeInfo.url, type: "redirect"}));
+        }
+    });
+  });
+
+// var handleLinkClick = function (e) {
+//   var tag = $(e.target).href;
+//   socket.send(JSON.stringify({tag: tag, type: "redirect"}));
+//   }
+
+
 $(document).ready(function(){
+
   //$('body').append('<div id="container"></div>');
   $('body').append('<div id="annotate_tpl" class="annotate"><textarea class="postit"></textarea><a class="annotate-close"><strong style="color:#ff0000;">x</strong> delete</a></div>');
 
@@ -171,7 +187,7 @@ $(document).ready(function(){
       $(document).on('mouseover', handleMouseover); 
       $(document).on('mouseout', handleMouseout);
       $(document).on('click', handleMouseClick);
-      $('a').on('click', handleLinkClick);    
+      // $('a').on('click', handleLinkClick);    
       isMainDude = true;
 
       $('#annotate-overlay-layer').addClass('overlay-layer');
@@ -179,7 +195,7 @@ $(document).ready(function(){
     else{
       $(document).off('mouseover'); 
       $(document).off('click');
-      $('a').off('click', handleLinkClick);    
+      // $('a').off('click', handleLinkClick);    
 
       isMainDude = false;
       $('#annotate-overlay-layer').removeClass('overlay-layer');
