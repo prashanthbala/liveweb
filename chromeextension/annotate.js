@@ -29,11 +29,14 @@ if ("WebSocket" in window)
           console.log('highlight. tag: ',tag,'\n');
         }
         else if (eventType == "click") {
+          tag = tag.split('.highlight');
+          tag = tag.join('');
+          console.log("click. tag: ",tag,'\n');
           // chrome.tabs.getCurrent(function (tab) {
           //   var tabUrl = encodeURIComponent(tab.url);
           //   var tabTitle = encodeURIComponent(tab.title);
           //   chrome.tabs.update(tab.id, {url: tag});
-            $(tag).click();
+           $(tag).click();
         }
         else if(eventType == "dot") {
           console.log('dotlol');
