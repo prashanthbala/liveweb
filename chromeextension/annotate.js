@@ -19,8 +19,6 @@ var handleMouseout = function (e) {
   $(e.target).removeClass('highlight');
   }
 $(document).ready(function(){
-  $('head').append('<link rel="stylesheet" href="http://www.dropbox.com/s/4gl15gb2r31fibj/jquery.annotate.css?dl=1">');
-  $('head').append('<link rel="stylesheet" href="http://www.dropbox.com/s/noj7bmh1pscs03p/annotations.css?dl=1");
   //$('body').append('<div id="container"></div>');
   $('body').append('<div id="annotate_tpl" class="annotate"><textarea class="postit"></textarea><a class="annotate-close"><strong style="color:#ff0000;">x</strong> delete</a></div>');
 
