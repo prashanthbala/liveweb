@@ -1,4 +1,6 @@
 var isMainDude = false;
+var oldRecvdTag = null;
+
 if ("WebSocket" in window)
 {
   var channel = 1;
@@ -17,6 +19,11 @@ if ("WebSocket" in window)
         console.log("in here. eventType: ",eventType,", tag: ,",tag);
         /* TAGS CHANGE */
         if(eventType == "highlight") {
+          if (oldRecvdTag)
+          {
+            $(oldRecvdTag).removeClass('highlight');
+            oldRecvdTag = tag;
+          }
           $(tag).addClass('highlight');  
           console.log('highlight. tag: ',tag,'\n');
         }
@@ -43,6 +50,7 @@ else {
 var lastID = null;
 var startID = 0;
 var currentTypeOfInteraction = "highlight"
+
 
 var handleMouseover = function (e) {
     var targetElement = e.target;
