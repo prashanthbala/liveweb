@@ -53,8 +53,9 @@ if ("WebSocket" in window)
           //$(tag).addClass('draw');  
         }
         else if(eventType == "keypress") {
+          console.log("KEYPRESSLOL\n keycode", response.keycode);
           var e = jQuery.Event("keypress");
-          e.keyCode = response.keyCode;
+          e.keyCode = response.keycode;
           $(tag).trigger(e);
           }
         oldRecvdTag  = tag;
