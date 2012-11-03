@@ -32,11 +32,14 @@ if ("WebSocket" in window)
           tag = tag.split('.highlight');
           tag = tag.join('');
           console.log("click. tag: ",tag,'\n');
-          // chrome.tabs.getCurrent(function (tab) {
-          //   var tabUrl = encodeURIComponent(tab.url);
-          //   var tabTitle = encodeURIComponent(tab.title);
-          //   chrome.tabs.update(tab.id, {url: tag});
            $(tag).click();
+        }
+        else if (eventType == "redirect") {
+            chrome.tabs.getCurrent(function (tab) {
+                // var tabUrl = encodeURIComponent(tab.url);
+                // var tabTitle = encodeURIComponent(tab.title);
+                chrome.tabs.update(tab.id, {url: tag});
+          };
         }
         else if(eventType == "dot") {
           console.log('dotlol');
