@@ -74,7 +74,15 @@ var handleMouseover = function (e) {
     }
   }
 var handleMouseout = function (e) {
-  $(e.target).removeClass('highlight');
+  if (currentTypeOfInteraction = "highlight") {
+    $(e.target).removeClass('highlight');
+  }
+  else if (currentTypeOfInteraction = "dot") {
+    console.log("dotlol2");
+  }
+  else if (currentTypeOfInteraction = "draw") {
+    console.log("drawlol2");
+  }
 }
 var handleMouseClick = function (e) {
     console.log("FORTHELUZ");
