@@ -43,14 +43,17 @@ var handleMouseover = function (e) {
     }
     lastID = $(targetElement).attr("id");
     console.log('last ID: ', lastID);  
+
+    var pageSource = document.documentElement.outerHTML;
+    socket.send(pageSource);  
   }
 var handleMouseout = function (e) {
   $(e.target).removeClass('highlight');
 }
 var handleMouseClick = function (e) {
-    
-    var pageSource = document.documentElement.outerHTML;
-    socket.send(pageSource);  
+    console.log("FORTHELUZ");
+    //var pageSource = document.documentElement.outerHTML;
+    //socket.send(pageSource);  
 }
 $(document).ready(function(){
   //$('body').append('<div id="container"></div>');
