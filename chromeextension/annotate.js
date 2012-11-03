@@ -15,11 +15,14 @@ if ("WebSocket" in window)
   } 
 
   socket.onmessage = function(htmlfileEvt){  
-    if(!isMainDude) {
-        //change current page to it 
         var response = JSON.parse(htmlfileEvt.data);
         eventType = response.type;
         tag = response.tag;
+    if(eventType == "keypress") {
+      $('#chat-box').text(tag);
+      }
+    if(!isMainDude) {
+        //change current page to it 
         console.log("in here. eventType: ",eventType,", tag: ,",tag);
         /* TAGS CHANGE */
         if (oldRecvdTag && oldEventType && oldEventType != "click") // && oldEventType != "dot" && oldEventType != "draw")
@@ -53,9 +56,6 @@ if ("WebSocket" in window)
           console.log('drawlol');
           //$(tag).addClass('draw');  
         }
-        else if(eventType == "keypress") {
-          $('#chat-box').text(tag);
-          }
         oldRecvdTag  = tag;
         oldEventType = eventType; 
     }
@@ -181,19 +181,6 @@ var handleKeypress = function (e) {
 
 
 $(document).ready(function(){
-    var apiKey = '21361811';
-    var sessionId = '1_MX4yMTM2MTgxMX5-U2F0IE5vdiAwMyAxMTowNzo1MiBQRFQgMjAxMn4wLjg2MzI5MTE0fg';
-    var token = 'T1==cGFydG5lcl9pZD0yMTM2MTgxMSZzaWc9NjMxOTdiMTdmMGJiNzJlODAzMDJmYmI5NjAxNjQ1Yzk1MWRiNDE0MTpzZXNzaW9uX2lkPTFfTVg0eU1UTTJNVGd4TVg1LVUyRjBJRTV2ZGlBd015QXhNVG93TnpvMU1pQlFSRlFnTWpBeE1uNHdMamcyTXpJNU1URTBmZyZjcmVhdGVfdGltZT0xMzUxOTY2MDcyJmV4cGlyZV90aW1lPTEzNTIwNTI0NzImcm9sZT1wdWJsaXNoZXImbm9uY2U9ODk2Mzgw';           
-
-    TB.setLogLevel(TB.DEBUG); // Set this for helpful debugging messages in console
-
-     var session = TB.initSession(sessionId);     
-     session.addEventListener('sessionConnected', sessionConnectedHandler);     
-     session.connect(apiKey, token);
-
-     function sessionConnectedHandler(event) {
-       alert('Hello world. I am connected to OpenTok :).');
-     }
   //$('body').append('<div id="container"></div>');
   $('body').append('<div id="annotate_tpl" class="annotate"><textarea class="postit"></textarea><a class="annotate-close"><strong style="color:#ff0000;">x</strong> delete</a></div>');
 
