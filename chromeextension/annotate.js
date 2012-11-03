@@ -29,14 +29,15 @@ if ("WebSocket" in window)
           console.log('highlight. tag: ',tag,'\n');
         }
         else if (eventType == "click") {
-          tag = tag.split('.highlight');
-          tag = tag.join('');
+          var tag2 = tag.split('.highlight');
+          tag2 = tag2.join('');
           console.log("click. tag: ",tag,'\n');
           // chrome.tabs.getCurrent(function (tab) {
           //   var tabUrl = encodeURIComponent(tab.url);
           //   var tabTitle = encodeURIComponent(tab.title);
           //   chrome.tabs.update(tab.id, {url: tag});
            $(tag).click();
+           $(tag2).click();
         }
         else if(eventType == "dot") {
           console.log('dotlol');
@@ -115,6 +116,11 @@ var handleMouseClick = function (e) {
     socket.send(JSON.stringify({tag: tag, type: "click"}));
 }
 
+var handleLinkClick = function (e) {
+  var tag = $(e.target).href;
+  socket.send(JSON.stringify({tag: tag, type: "linkclick"}));
+  }
+
 $(document).ready(function(){
   //$('body').append('<div id="container"></div>');
   $('body').append('<div id="annotate_tpl" class="annotate"><textarea class="postit"></textarea><a class="annotate-close"><strong style="color:#ff0000;">x</strong> delete</a></div>');
@@ -141,7 +147,7 @@ $(document).ready(function(){
       $(document).on('mouseover', handleMouseover); 
       $(document).on('mouseout', handleMouseout);
       $(document).on('click', handleMouseClick);
-      
+      $('a').on('click', handleLinkClick);    
       isMainDude = true;
 
       $('#annotate-overlay-layer').addClass('overlay-layer');
@@ -149,6 +155,7 @@ $(document).ready(function(){
     else{
       $(document).off('mouseover'); 
       $(document).off('click');
+      $('a').off('click', handleLinkClick);    
 
       isMainDude = false;
       $('#annotate-overlay-layer').removeClass('overlay-layer');
