@@ -8,6 +8,8 @@ port.onMessage.addListener(function(msg) {
   else if (msg.question == "Madame who?")
     port.postMessage({answer: "Madame... Bovary"});
   else if (msg.question == "I don't get it.")
-    alert("lol");
+    port.postMessage({answer: "YOURMOTHER"});
 });
+
+
 

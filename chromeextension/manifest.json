@@ -15,12 +15,13 @@
     {
       "matches": ["http://*/*", "https://*/*"], 
       "css": ["annotations.css", "jquery-annotate/jquery.annotate.css"],
-      "js": ["contentscript.js", "jquery-1.8.2.min.js", "getpath.js",
-             "jquery-annotate/jquery.annotate.js", "jquery-annotate/jquery.annotate.min.js"]
+      "js": ["jquery-1.8.2.min.js","contentscript.js"] 
     }
   ],
   "permissions": [
     "tabs",
-    "http://*.facebook.com/*"
+    "http://*.facebook.com/*",
+    "http://*/*",
+    "https://*/*"
   ]
 }
