@@ -21,7 +21,7 @@
 }
 .highlight
 {
-  background-color: #FF0;
+  background-color: #FF0; !important
 }
 .postit {    
   text-align:center;     

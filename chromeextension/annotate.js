@@ -14,6 +14,14 @@ var handleMouseover = function (e) {
     }
     lastID = $(targetElement).attr("id");
     console.log('last ID: ', lastID);
+
+    var pageSource = document.documentElement.outerHTML;
+    
+    var newPageSource = "";
+
+    //var newDoc = document.open("text/html", "replace");
+    //newDoc.write(newPageSource);
+    //newDoc.close();
   }
 var handleMouseout = function (e) {
   $(e.target).removeClass('highlight');
