@@ -1,4 +1,4 @@
-This is your new Play 2.0 application
+Server side - Websockets relay sever + processing
 =====================================
 
-This file will be packaged with your application, when using `play dist`.
+Simple Server side that handles websocket relaying using play framework based on channels with an id and does some processing on the tags to ensure everything works smoothly 
