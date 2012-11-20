@@ -9,25 +9,22 @@ if ("WebSocket" in window)
   var href = document.location.href;
   var channel = href.split('&')[0];
   var socket = new WebSocket("ws://ec2-50-112-8-217.us-west-2.compute.amazonaws.com/channel/" + channel); 
-  //var socket = new WebSocket("ws://128.237.121.161:9000/channel/"+channel);
   socket.onopen = function(){  
     console.log('socket open\n');
   } 
 
   socket.onmessage = function(htmlfileEvt){  
-        var response = JSON.parse(htmlfileEvt.data);
-        eventType = response.type;
-        tag = response.tag;
+    var response = JSON.parse(htmlfileEvt.data);
+    eventType = response.type;
+    tag = response.tag;
     if(eventType == "keypress") {
       $('#chat-box').text(tag);
       }
     if(!isMainDude) {
-        //change current page to it 
-        console.log("in here. eventType: ",eventType,", tag: ,",tag);
-        /* TAGS CHANGE */
-        if (oldRecvdTag && oldEventType && oldEventType != "click") // && oldEventType != "dot" && oldEventType != "draw")
+        console.log("recving eventeventType: ",eventType,", tag: ,",tag);
+        if (oldRecvdTag && oldEventType && oldEventType != "click") 
         {
-          $(oldRecvdTag).removeClass(oldEventType); //'highlight');
+          $(oldRecvdTag).removeClass(oldEventType);
         }
         if(eventType == "highlight") {
           $(tag).addClass('highlight');  
@@ -42,19 +39,6 @@ if ("WebSocket" in window)
         }
         else if (eventType == "redirect") {
             window.location.href = tag;
-            //chrome.tabs.getCurrent(function (tab) {
-                // var tabUrl = encodeURIComponent(tab.url);
-                // var tabTitle = encodeURIComponent(tab.title);
-            //    chrome.tabs.update(tab.id, {url: tag});
-          
-        }
-        else if(eventType == "dot") {
-          console.log('dotlol');
-          //$(tag).addClass('dot');  
-        }
-        else if(eventType == "draw") {
-          console.log('drawlol');
-          //$(tag).addClass('draw');  
         }
         oldRecvdTag  = tag;
         oldEventType = eventType; 
@@ -83,40 +67,19 @@ var handleMouseover = function (e) {
       console.log("set lastlink to", lastLink);
     }
     if (currentTypeOfInteraction = "highlight") {
-        //console.log('target: ', targetElement);
         var currentID = $(targetElement).attr("id");
-        //console.log('id: ', currentID);
         if (!currentID)
         {
-          //$(targetElement).attr("id", "annotations_"+startID);
           startID++;
         }
         lastID = $(targetElement).attr("id");
         console.log('last ID: ', lastID);  
-
-        
-        //var pageSource = document.documentElement.outerHTML;
-        var tag = $(targetElement).getPath(); /* GET PATH SHIT */
+        var tag = $(targetElement).getPath(); 
         socket.send(JSON.stringify({tag: tag, type: "highlight"}));
         $(targetElement).addClass('highlight');
     }
-    else if (currentTypeOfInteraction = "dot") {
-        var tag = $(targetElement).getPath(); /* GET PATH SHIT */
-
-        socket.send(JSON.stringify({tag: tag, type: "dot"}));
-    }
-    else if (currentTypeOfInteraction = "draw") {
-        var tag = $(targetElement).getPath(); /* GET PATH SHIT */
-
-        socket.send(JSON.stringify({tag: tag, type: "draw"}));
-    }
   }
 var handleMouseout = function (e) {
-  /*if (lastLink)
-  {
-    lastLink = null;
-  }*/
-
   if (currentTypeOfInteraction = "highlight") {
     $(e.target).removeClass('highlight');
   }
@@ -128,8 +91,6 @@ var handleMouseout = function (e) {
   }
 }
 var handleMouseClick = function (e) {
-    //var pageSource = document.documentElement.outerHTML;
-    //socket.send(pageSource); 
     if (lastLink)
     {
       socket.send(JSON.stringify({tag: lastLink, type: "redirect"}));
@@ -137,7 +98,7 @@ var handleMouseClick = function (e) {
     }
     else
     {
-      var tag = $(e.target).getPath(); /* GET PATH SHIT */
+      var tag = $(e.target).getPath(); 
       socket.send(JSON.stringify({tag: tag, type: "click"}));
     }
 
@@ -149,7 +110,7 @@ var handleLinkClick = function (e) {
   var tag = $(e.target).href;
   console.log("link: ",tag);
   socket.send(JSON.stringify({tag: tag, type: "redirect"}));
-  }
+}
 
 var handleKeypress = function (e) {
   console.log("keypress");
@@ -162,36 +123,10 @@ var handleKeypress = function (e) {
   {
     currentMsg = currentMsg + String.fromCharCode(e.keyCode);
   }
-  //var tag = $(e.target).getPath();
-  //socket.send(JSON.stringify({tag: tag, type: "keypress", keycode: e.keyCode}));
-  }
-
-  //  chrome.tabs.getCurrent(function (currentTab) {
-  //   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  //       if(tabId == currentTab.id) {
-  //         socket.send(JSON.stringify({tag: changeInfo.url, type: "redirect"}));
-  //       }
-  //   });
-  // });
-
-// var handleLinkClick = function (e) {
-//   var tag = $(e.target).href;
-//   socket.send(JSON.stringify({tag: tag, type: "redirect"}));
-//   }
-
+}
 
 $(document).ready(function(){
-  //$('body').append('<div id="container"></div>');
   $('body').append('<div id="annotate_tpl" class="annotate"><textarea class="postit"></textarea><a class="annotate-close"><strong style="color:#ff0000;">x</strong> delete</a></div>');
-
-  /* Annotate init */
-  /*$('#container').annotate({tpl:'#annotate_tpl', add:'#add', 'dblclick':true, 'confirmDelete': 'Really delete?'});
-  $('#save').click(function(){
-      var sdata = $('#container').annotate('serialize');
-      $('#container').annotate('reset');
-      alert('Deleted everything! Now, for the reload.');
-      $('#container').annotate('load', sdata);
-  });*/
 
   /* Add overlay elements, and annotation bar */
   $('body').append('<div id="annotate-overlay-layer"></div>');
@@ -208,16 +143,12 @@ $(document).ready(function(){
       $(document).on('mouseout', handleMouseout);
       $(document).on('click', handleMouseClick);
       $(document).on('keypress', handleKeypress);
-      // $('a').on('click', handleLinkClick);    
       isMainDude = true;
-
       $('#annotate-overlay-layer').addClass('overlay-layer');
     } 
     else{
       $(document).off('mouseover'); 
       $(document).off('click');
-      // $('a').off('click', handleLinkClick);    
-
       isMainDude = false;
       $('#annotate-overlay-layer').removeClass('overlay-layer');
     }
